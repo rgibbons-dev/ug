@@ -1,0 +1,19 @@
+ug - an ad-hoc `curl | sh` install script manager
+
+if you choose to use this, do so at your own risks
+links may change
+i make no guarantees
+
+so, this is all you need to do:
+
+create a text file at `~/.local/share` called `l_l`
+format the given install script as follows:
+
+<label>:<script>
+
+this must be on one line only
+
+ug accepts one argument with two possibilities:
+
+all - execute all install scripts
+<label> - execute the install script for the specified label

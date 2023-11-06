@@ -1,0 +1,9 @@
+#!/bin/sh
+cur=$(pwd)
+cd || exit;
+home=$(pwd);
+file="$home/.local/share/l_l"
+while IFS= read -r line; do
+  echo "$line"
+done < "$file"
+cd $cur;
