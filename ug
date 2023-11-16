@@ -1,9 +1,68 @@
 #!/bin/sh
-cur=$(pwd)
-cd || exit;
-home=$(pwd);
-file="$home/.local/share/l_l"
-while IFS= read -r line; do
-  echo "$line"
+
+# Function to safely grep for a label
+safe_grep_label() {
+    label="$1"
+    file="$2"
+    pattern="^$(printf '%s' "$label" | sed 's/[^a-zA-Z0-9_-]/\\&/g'):"
+    grep -qE "$pattern" "$file"
+}
+
+# Check if the argument is provided
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 all|<label>"
+  exit 1
+fi
+
+# Define the file location
+file="$HOME/.local/share/l_l"
+
+# Check if file exists
+if [ ! -f "$file" ]; then
+  echo "File not found: $file"
+  exit 1
+fi
+
+# Check for the existence of the label, if not 'all'
+if [ "$1" != "all" ]; then
+  if ! safe_grep_label "$1" "$file"; then
+    echo "Label '$1' not found in the file."
+    exit 1
+  fi
+  label_count=$(safe_grep_label "$1" "$file" | wc -l)
+  if [ "$label_count" -gt 1 ]; then
+    echo "Error: Duplicate label '$1' found."
+    exit 1
+  fi
+fi
+
+# Execute scripts based on the argument
+while IFS=: read -r label script; do
+  if [ "$1" = "all" ] || [ "$1" = "$label" ]; then
+    # Skip if label or script is empty
+    if [ -z "$label" ] || [ -z "$script" ]; then
+        echo "Warning: Skipping line with empty label or script"
+        continue
+    fi
+    # Check for special characters in the label
+    if echo "$label" | grep -q '[^A-Za-z0-9_-]'; then
+      echo "Warning: Skipping line with invalid label: $label"
+      continue
+    fi
+    # Validate that the script is a curl command with allowed parameters piped to sh
+    if ! echo "$script" | grep -qE '^curl .*https://[^ |]+\| sh$'; then
+      echo "Warning: Invalid script format. Only secure 'curl' commands are allowed"
+      continue
+    fi
+    # Execute the script in a controlled manner
+    url=$(echo "$script" | sed 's/^curl .*\(https:\/\/.*\)| sh$/\1/')
+    curl "$url" | sh
+    script_exit_status=$?
+    
+    # Check if the script executed successfully
+    if [ "$script_exit_status" -ne 0 ]; then
+      echo "Warning: Script for label '$label' exited with status $script_exit_status"
+      # Optional: Take action based on the exit status
+    fi
+  fi
 done < "$file"
-cd $cur;
