@@ -24,3 +24,6 @@ labels must be unique;
 labels must contain underscores, hyphens, or alphanumeric ANSI characters.
 
 prototyped by me, refined and rewritten with help from GPT4
+
+you can read about the process of making `ug` here:
+https://rgibbons-dev.github.io/ug

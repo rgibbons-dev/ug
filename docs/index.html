@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>`ug`</title>
+    <title>ug</title>
     <style>
         body {
             display: flex;
@@ -30,16 +30,17 @@
     <p>
             But who watches the Watchmen? `ug` is an attempt to wrangle software distributed in the form of <code>curl | sh</code> one-liners. 
         What is to follow details the process I undertook while writing it. To say I wrote it alone would be disingenuous, as I had 
-        assistance from GPT. I began by implementing primitive versions in various programming languages, but settled on POSIX sh because 
-        of the brevity of the code. The final product comes out to 69 lines, including the newline at the end of the file. My first 
-        attempt at computer-assisted programming was unstructured and naive, thus not very fruitful. I then read gwern's 
-        <a href="https://gwern.net/tla#inner-monologue">methodology</a>, and immediately began to see better results. The cadence was slow, 
-        but I found that the prompt-implement-test loop was a good model for both myself, so I didn't get lost, and for GPT, so it could build 
-        a context. I used GPT-4 for this, for the record. I worked my way one-by-one through GPT's suggestions, ensuring that it produced working test cases, and if not, we dove into 
-        whatever the offending code was. It helped that I had the desired commands specified prior to beginning, as I found from other projects 
-        that changing problem requirements mid-way through led to a bit of a mess, for that project I've scrapped everything and restarted alone. 
-        My overall verdict on GPT-4 is that it was incredibly useful for something this small, and it saved me a lot of time and cognitive energy. 
-        I'm happy about how `ug` came out, and I hope you find it useful (if you dare to use it at all).
+        assistance from GPT-4. I began by implementing primitive versions on my own in various programming languages, but settled on POSIX sh because 
+        of the brevity of the collective code, as the final product comes out to 69 lines, including the newline at the end of the file. My first 
+        attempt at computer-assisted programming was unstructured and naive, thus not very fruitful. I then read about gwern's 
+        <a href="https://gwern.net/tla#inner-monologue">methodology</a>, and immediately began to see better results when I applied it to my work. 
+        The cadence was slow, but I found that the prompt-implement-test loop was a good model for both myself, so I didn't get lost, and for GPT, 
+        so it could build a context. I worked my way one-by-one through GPT's suggestions, ensuring that it produced code that passed existing test cases 
+        and new ones specific to that feature, and if not, we dove into whatever the offending issue was. It helped that I had the desired commands 
+        specified prior to beginning, as I found from other projects that changing problem requirements mid-way through led to a bit of a mess, 
+        for that project I've scrapped everything and restarted alone. My overall verdict on GPT-4 is that it was incredibly useful for something 
+        this small, and it saved me a lot of time and cognitive energy. I'm happy about how `ug` came out, and I hope you find it useful 
+        (if you dare to use it at all).
     </p>
 </body>
 </html>
